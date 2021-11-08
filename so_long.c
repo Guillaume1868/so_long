@@ -1,13 +1,149 @@
-#include "so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/05 13:04:42 by gaubert           #+#    #+#             */
+/*   Updated: 2021/11/08 16:52:15 by gaubert          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	main()
+#include "so_long.h"
+#include "libft/libft.h"
+#include <stdio.h>
+#include "get_next_line.h"
+
+int	load_assets2(void *mlx, t_game *g)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(&mlx_ptr, 1920, 1080, "okau");
-	int i = 1;
-	while (++i< 100)
-		mlx_pixel_put(mlx_ptr,win_ptr,i,10,0x00ff0000);
-	mlx_loop(mlx_ptr);
+	g->exit.img = mlx_xpm_file_to_image(mlx, "./img/exit.xpm", &g->exit.width,
+			&g->exit.height);
+	if (!g->exit.img)
+		return (1);
+	g->exit.addr = mlx_get_data_addr(&g->exit.img, &g->exit.bits_per_pixel,
+			&g->exit.width, &g->exit.endian);
+	g->empty.img = mlx_xpm_file_to_image(mlx, "./img/empty.xpm",
+			&g->empty.width, &g->empty.height);
+	if (!g->empty.img)
+		return (1);
+	g->empty.addr = mlx_get_data_addr(&g->empty.img, &g->empty.bits_per_pixel,
+			&g->empty.width, &g->empty.endian);
+	return (0);
 }
+
+int	load_assets(void *mlx, t_game *g)
+{
+	g->wall.img = mlx_xpm_file_to_image(mlx, "./img/wall.xpm", &g->wall.width,
+			&g->wall.height);
+	if (!g->wall.img)
+		return (1);
+	g->wall.addr = mlx_get_data_addr(&g->wall.img, &g->wall.bits_per_pixel,
+			&g->wall.width, &g->wall.endian);
+	g->coll.img = mlx_xpm_file_to_image(mlx, "./img/coll.xpm", &g->coll.width,
+			&g->coll.height);
+	if (!g->coll.img)
+		return (1);
+	g->coll.addr = mlx_get_data_addr(&g->coll.img, &g->coll.bits_per_pixel,
+			&g->coll.width, &g->coll.endian);
+	g->player.img = mlx_xpm_file_to_image(mlx, "./img/player.xpm",
+			&g->player.width, &g->player.height);
+	if (!g->player.img)
+		return (1);
+	g->player.addr = mlx_get_data_addr(&g->player.img,
+			&g->player.bits_per_pixel, &g->player.width, &g->player.endian);
+	return (load_assets2(mlx, g));
+}
+
+
+void	put_img(t_game *g, int x, int y, char c)
+{
+	if (c == '0')
+		mlx_put_image_to_window(g->mlx, g->win, g->empty.img, x * 64, y * 64);
+	else if (c == '1')
+		mlx_put_image_to_window(g->mlx, g->win, g->wall.img, x * 64, y * 64);
+	else if (c == 'C')
+		mlx_put_image_to_window(g->mlx, g->win, g->coll.img, x * 64, y * 64);
+	else if (c == 'E')
+		mlx_put_image_to_window(g->mlx, g->win, g->exit.img, x * 64, y * 64);
+	else if (c == 'P')
+		mlx_put_image_to_window(g->mlx, g->win, g->player.img, x * 64, y * 64);
+}
+
+void	draw_map(t_game *g)
+{
+	put_img(g, 0, 0, '0');
+	put_img(g, 1, 0, '1');
+	put_img(g, 0, 1, 'C');
+	put_img(g, 1, 1, 'E');
+	put_img(g, 0, 2, 'P');
+}
+
+int	put_error(int type)
+{
+	if (type == 1)
+		printf("Error\nPlease specify a .ber map in argument");
+	return (1);
+}
+
+int	count_lines(char *file)
+{
+	int	fd;
+	int	i;
+
+	i = 0;
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	while (get_next_line(fd))
+		i++;
+	close(fd);
+	return (i);
+}
+
+int	parse_map(t_game *g, char *file)
+{
+	int		fd;
+	int		linecnt;
+	char	*line;
+
+	g = 0;
+	linecnt = count_lines(file);
+	if (linecnt == -1)
+		return (1);
+	fd = open(file, O_RDONLY);
+	line = get_next_line(fd);
+	printf("%d %s", linecnt, line);
+	return (0);
+}
+
+int	main(int ac, char **argv)
+{
+	t_game	game;
+
+	if (ac != 2)
+		return (put_error(1));
+	parse_map(&game, argv[1]);
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, 240, 222, "so_long");
+	load_assets(game.mlx, &game);
+	draw_map(&game);
+	//mlx_loop(game.mlx);
+}
+
+
+
+	//t_data	img;
+	//mlx_string_put(mlx, mlx_win, 10, 10, 0x008700af, "Hapi");
+
+	//img.img = mlx_new_image(mlx, 2, 2);
+	//img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+	//&img.line_length, &img.endian);
+	//my_mlx_pixel_put(img.img, 0, 0, 0x00ffffff);
+// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+// 	char	*dst;
+
+// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+// 	*(unsigned int *) dst = color;
+// }

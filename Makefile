@@ -1,6 +1,6 @@
 NAME 	=	SoLong
 
-SRC		=	so_long.c
+SRC		=	so_long.c get_next_line.c get_next_line_utils.c
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -14,18 +14,19 @@ RESET       =   \e[0m
 _SUCCESS    =   [$(GREEN)SUCCESS$(RESET)]
 _INFO       =   [$(YELLOW)INFO$(RESET)]
 
-all:	$(LFT) $(NAME)
-	
+all:	$(NAME)
 
-%.o: %.c 
-	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
 
-$(LFT):
-	@ $(MAKE) -C ./libft
-$(NAME): $(LFT) $(OBJ) 
-	$(MAKE) -C  ./mlx
-	$(CC) $(OBJ) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+%.o: %.c
+	@$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+	@printf "$(_INFO) OBJ $@ compiled.\n"
+
+$(NAME): $(LIBFT) $(OBJ)
+	@$(MAKE) -C  ./mlx
+	@$(MAKE) -C  ./libft
+	@$(CC) -g $(OBJ) -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 	@printf "$(_SUCCESS) SoLong ready.\n"
+
 clean:
 	@ $(RM) $(OBJ)
 	@printf "$(_INFO) OBJ removed.\n"
