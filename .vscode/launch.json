@@ -1,0 +1,13 @@
+{
+    "configurations": [
+    {
+        "name": "F5 Anything: Custom Command",
+        "type": "f5anything",
+        "request": "launch",
+        "command": "make && ./SoLong 1.ber",
+        "terminalName": "F5 Anything",
+        "terminalIndex": -1,
+        "showTerminal": true
+    }
+    ]
+}

@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:08:40 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/08 14:38:14 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/09 02:17:11 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,14 @@ typedef struct s_game
 	int			map_width;
 	int			map_height;
 	int			coll_count;
-	int			mooves_count;
+	int			exit_count;
+	int			player_count;
+	t_coord		player_pos;
+	int			moves;
 }				t_game;
+
+int	parse_map(t_game *g, char *file);
+int	put_error(int type);
+int	load_assets(void *mlx, t_game *g);
 
 #endif

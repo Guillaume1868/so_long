@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:04:42 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/08 16:52:15 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/09 02:43:59 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,6 @@
 #include "libft/libft.h"
 #include <stdio.h>
 #include "get_next_line.h"
-
-int	load_assets2(void *mlx, t_game *g)
-{
-	g->exit.img = mlx_xpm_file_to_image(mlx, "./img/exit.xpm", &g->exit.width,
-			&g->exit.height);
-	if (!g->exit.img)
-		return (1);
-	g->exit.addr = mlx_get_data_addr(&g->exit.img, &g->exit.bits_per_pixel,
-			&g->exit.width, &g->exit.endian);
-	g->empty.img = mlx_xpm_file_to_image(mlx, "./img/empty.xpm",
-			&g->empty.width, &g->empty.height);
-	if (!g->empty.img)
-		return (1);
-	g->empty.addr = mlx_get_data_addr(&g->empty.img, &g->empty.bits_per_pixel,
-			&g->empty.width, &g->empty.endian);
-	return (0);
-}
-
-int	load_assets(void *mlx, t_game *g)
-{
-	g->wall.img = mlx_xpm_file_to_image(mlx, "./img/wall.xpm", &g->wall.width,
-			&g->wall.height);
-	if (!g->wall.img)
-		return (1);
-	g->wall.addr = mlx_get_data_addr(&g->wall.img, &g->wall.bits_per_pixel,
-			&g->wall.width, &g->wall.endian);
-	g->coll.img = mlx_xpm_file_to_image(mlx, "./img/coll.xpm", &g->coll.width,
-			&g->coll.height);
-	if (!g->coll.img)
-		return (1);
-	g->coll.addr = mlx_get_data_addr(&g->coll.img, &g->coll.bits_per_pixel,
-			&g->coll.width, &g->coll.endian);
-	g->player.img = mlx_xpm_file_to_image(mlx, "./img/player.xpm",
-			&g->player.width, &g->player.height);
-	if (!g->player.img)
-		return (1);
-	g->player.addr = mlx_get_data_addr(&g->player.img,
-			&g->player.bits_per_pixel, &g->player.width, &g->player.endian);
-	return (load_assets2(mlx, g));
-}
-
 
 void	put_img(t_game *g, int x, int y, char c)
 {
@@ -72,49 +31,47 @@ void	put_img(t_game *g, int x, int y, char c)
 
 void	draw_map(t_game *g)
 {
-	put_img(g, 0, 0, '0');
-	put_img(g, 1, 0, '1');
-	put_img(g, 0, 1, 'C');
-	put_img(g, 1, 1, 'E');
-	put_img(g, 0, 2, 'P');
+	int		x;
+	int		y;
+	char	*hud;
+	char	*tmp;
+
+	y = 0;
+	while (y < g->map_height)
+	{
+		x = 0;
+		while (x < g->map_width)
+		{
+			put_img(g, x, y, g->map[x + y * g->map_width]);
+			x++;
+		}
+		y++;
+	}
+	tmp = ft_itoa(g->moves);
+	hud = ft_strjoin(tmp, "Moves");
+	mlx_string_put(g->mlx, g->win, 10, 10, 0x00ffffff, hud);
+	free(hud);
 }
 
 int	put_error(int type)
 {
 	if (type == 1)
 		printf("Error\nPlease specify a .ber map in argument");
-	return (1);
-}
-
-int	count_lines(char *file)
-{
-	int	fd;
-	int	i;
-
-	i = 0;
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	else if (type == 2)
+	{
+		printf("Error\nInconsistent map width");
 		return (-1);
-	while (get_next_line(fd))
-		i++;
-	close(fd);
-	return (i);
-}
-
-int	parse_map(t_game *g, char *file)
-{
-	int		fd;
-	int		linecnt;
-	char	*line;
-
-	g = 0;
-	linecnt = count_lines(file);
-	if (linecnt == -1)
-		return (1);
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	printf("%d %s", linecnt, line);
-	return (0);
+	}	
+	else if (type == 3)
+		printf("Error\nInvalid map char");
+	else if (type == 4)
+		printf("Error\nMap is not enclosed in walls");
+	else if (type == 5)
+	{
+		printf("Error\n Invalid map, please specify 1 player start position,");
+		printf("at least 1 collectible and 1 exit");
+	}
+	return (1);
 }
 
 int	main(int ac, char **argv)
@@ -123,15 +80,14 @@ int	main(int ac, char **argv)
 
 	if (ac != 2)
 		return (put_error(1));
-	parse_map(&game, argv[1]);
+	if (parse_map(&game, argv[1]))
+		return (1);
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, 240, 222, "so_long");
+	game.win = mlx_new_window(game.mlx, game.map_width * 64, game.map_height * 64, "so_long");
 	load_assets(game.mlx, &game);
 	draw_map(&game);
-	//mlx_loop(game.mlx);
+	mlx_loop(game.mlx);
 }
-
-
 
 	//t_data	img;
 	//mlx_string_put(mlx, mlx_win, 10, 10, 0x008700af, "Hapi");

@@ -1,6 +1,6 @@
 NAME 	=	SoLong
 
-SRC		=	so_long.c get_next_line.c get_next_line_utils.c
+SRC		=	so_long.c get_next_line.c get_next_line_utils.c load.c map.c
 
 OBJ		=	$(SRC:.c=.o)
 
