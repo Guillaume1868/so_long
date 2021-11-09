@@ -1,0 +1,68 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/gaubert/Documents/SoLong'
+gcc -Wall -Wextra -Werror -Imlx -c so_long.c -o so_long.o
+printf "[\e[38;5;226mINFO\e[0m] OBJ so_long.o compiled.\n"
+gcc -Wall -Wextra -Werror -Imlx -c get_next_line.c -o get_next_line.o
+printf "[\e[38;5;226mINFO\e[0m] OBJ get_next_line.o compiled.\n"
+gcc -Wall -Wextra -Werror -Imlx -c get_next_line_utils.c -o get_next_line_utils.o
+printf "[\e[38;5;226mINFO\e[0m] OBJ get_next_line_utils.o compiled.\n"
+gcc -Wall -Wextra -Werror -Imlx -c load.c -o load.o
+printf "[\e[38;5;226mINFO\e[0m] OBJ load.o compiled.\n"
+gcc -Wall -Wextra -Werror -Imlx -c map.c -o map.o
+printf "[\e[38;5;226mINFO\e[0m] OBJ map.o compiled.\n"
+/Library/Developer/CommandLineTools/usr/bin/make -C  ./mlx
+make[1]: Entering directory `/Users/gaubert/Documents/SoLong/mlx'
+cc -O2 -DSTRINGPUTX11   -c -o mlx_shaders.o mlx_shaders.c
+cc -O2 -DSTRINGPUTX11   -c -o mlx_new_window.o mlx_new_window.m
+cc -O2 -DSTRINGPUTX11   -c -o mlx_init_loop.o mlx_init_loop.m
+cc -O2 -DSTRINGPUTX11   -c -o mlx_new_image.o mlx_new_image.m
+cc -O2 -DSTRINGPUTX11   -c -o mlx_xpm.o mlx_xpm.c
+cc -O2 -DSTRINGPUTX11   -c -o mlx_int_str_to_wordtab.o mlx_int_str_to_wordtab.c
+cc -O2 -DSTRINGPUTX11   -c -o mlx_png.o mlx_png.c
+cc -O2 -DSTRINGPUTX11   -c -o mlx_mouse.o mlx_mouse.m
+ar -r libmlx.a mlx_shaders.o mlx_new_window.o mlx_init_loop.o mlx_new_image.o mlx_xpm.o mlx_int_str_to_wordtab.o mlx_png.o mlx_mouse.o
+ranlib libmlx.a
+make[1]: Leaving directory `/Users/gaubert/Documents/SoLong/mlx'
+/Library/Developer/CommandLineTools/usr/bin/make -C  ./libft
+make[1]: Entering directory `/Users/gaubert/Documents/SoLong/libft'
+gcc -Wall -Wextra -Werror -c ft_atoi.c -o ft_atoi.o
+gcc -Wall -Wextra -Werror -c ft_bzero.c -o ft_bzero.o
+gcc -Wall -Wextra -Werror -c ft_calloc.c -o ft_calloc.o
+gcc -Wall -Wextra -Werror -c ft_isalnum.c -o ft_isalnum.o
+gcc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
+gcc -Wall -Wextra -Werror -c ft_isascii.c -o ft_isascii.o
+gcc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
+gcc -Wall -Wextra -Werror -c ft_isprint.c -o ft_isprint.o
+gcc -Wall -Wextra -Werror -c ft_itoa.c -o ft_itoa.o
+gcc -Wall -Wextra -Werror -c ft_memchr.c -o ft_memchr.o
+gcc -Wall -Wextra -Werror -c ft_memcmp.c -o ft_memcmp.o
+gcc -Wall -Wextra -Werror -c ft_memcpy.c -o ft_memcpy.o
+gcc -Wall -Wextra -Werror -c ft_memmove.c -o ft_memmove.o
+gcc -Wall -Wextra -Werror -c ft_memset.c -o ft_memset.o
+gcc -Wall -Wextra -Werror -c ft_putchar_fd.c -o ft_putchar_fd.o
+gcc -Wall -Wextra -Werror -c ft_putendl_fd.c -o ft_putendl_fd.o
+gcc -Wall -Wextra -Werror -c ft_putnbr_fd.c -o ft_putnbr_fd.o
+gcc -Wall -Wextra -Werror -c ft_putstr_fd.c -o ft_putstr_fd.o
+gcc -Wall -Wextra -Werror -c ft_split.c -o ft_split.o
+gcc -Wall -Wextra -Werror -c ft_strchr.c -o ft_strchr.o
+gcc -Wall -Wextra -Werror -c ft_strdup.c -o ft_strdup.o
+gcc -Wall -Wextra -Werror -c ft_strjoin.c -o ft_strjoin.o
+gcc -Wall -Wextra -Werror -c ft_strlcat.c -o ft_strlcat.o
+gcc -Wall -Wextra -Werror -c ft_strlcpy.c -o ft_strlcpy.o
+gcc -Wall -Wextra -Werror -c ft_strlen.c -o ft_strlen.o
+gcc -Wall -Wextra -Werror -c ft_strmapi.c -o ft_strmapi.o
+gcc -Wall -Wextra -Werror -c ft_strncmp.c -o ft_strncmp.o
+gcc -Wall -Wextra -Werror -c ft_strnstr.c -o ft_strnstr.o
+gcc -Wall -Wextra -Werror -c ft_strrchr.c -o ft_strrchr.o
+gcc -Wall -Wextra -Werror -c ft_strtrim.c -o ft_strtrim.o
+gcc -Wall -Wextra -Werror -c ft_substr.c -o ft_substr.o
+gcc -Wall -Wextra -Werror -c ft_tolower.c -o ft_tolower.o
+gcc -Wall -Wextra -Werror -c ft_toupper.c -o ft_toupper.o
+gcc -Wall -Wextra -Werror -c ft_striteri.c -o ft_striteri.o
+ar rcs libft.a ft_atoi.o ft_bzero.o ft_calloc.o ft_isalnum.o ft_isalpha.o ft_isascii.o ft_isdigit.o ft_isprint.o ft_itoa.o ft_memchr.o ft_memcmp.o ft_memcpy.o ft_memmove.o ft_memset.o ft_putchar_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_putstr_fd.o ft_split.o ft_strchr.o ft_strdup.o ft_strjoin.o ft_strlcat.o ft_strlcpy.o ft_strlen.o ft_strmapi.o ft_strncmp.o ft_strnstr.o ft_strrchr.o ft_strtrim.o ft_substr.o ft_tolower.o ft_toupper.o ft_striteri.o
+echo "ar rcs libft.a"
+make[1]: Leaving directory `/Users/gaubert/Documents/SoLong/libft'
+gcc -g so_long.o get_next_line.o get_next_line_utils.o load.o map.o -Llibft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit -o SoLong
+printf "[\e[38;5;118mSUCCESS\e[0m] SoLong ready.\n"
+make: Leaving directory `/Users/gaubert/Documents/SoLong'
+ 
