@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:04:42 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/09 11:11:55 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/10 12:01:25 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,26 @@ int	put_error(int type)
 
 void	finish(t_game *g)
 {
-	(void) g;
+	/*int		x;
+	int		y;
+
+	y = 0;
+	while (y < g->map_height)
+	{
+		x = 0;
+		while (x < g->map_width)
+		{
+			if ((x + y) % 2)
+				put_img(g, x, y, 'E');
+			else
+				put_img(g, x, y, 'P');
+			mlx_string_put(g->mlx, g->win, x * 64 + 32, y * 64 + 32, 0x00ffffff, "GG!");
+			x++;
+		}
+		y++;
+	}*/
+	printf("You finished the game with %d mooves", g->moves);
+	mlx_destroy_window(g->mlx, g->win);
 }
 
 void	update_player_pos(t_game *g)
@@ -120,6 +139,7 @@ void	move_up(t_game *g)
 	else if (g->map[x + (y - 1) * g->map_width] == 'E')
 	{
 		finish(g);
+		return ;
 	}
 	g->moves++;
 	update_player_pos(g);
@@ -149,8 +169,70 @@ void	move_down(t_game *g)
 	else if (g->map[x + (y + 1) * g->map_width] == 'E')
 	{
 		finish(g);
+		return ;
 	}
 	g->moves++;
+	update_player_pos(g);
+	draw_map(g);
+}
+
+void	move_right(t_game *g)
+{
+	int	x;
+	int	y;
+
+	x = g->player_pos.x;
+	y = g->player_pos.y;
+	if (g->map[1 + x + y * g->map_width] == '0')
+	{
+		g->map[1 + x + y * g->map_width] = 'P';
+		g->map[x + y * g->map_width] = '0';
+	}
+	else if (g->map[1 + x + y * g->map_width] == 'C')
+	{
+		g->map[1 + x + y * g->map_width] = 'P';
+		g->map[x + y * g->map_width] = '0';
+		printf("%d\n", g->coll_count);
+		g->coll_count--;
+		printf("%d\n", g->coll_count);
+	}
+	else if (g->map[1 + x + y * g->map_width] == 'E')
+	{
+		finish(g);
+		return ;
+	}
+	g->moves++;
+	update_player_pos(g);
+	draw_map(g);
+}
+
+void	move_left(t_game *g)
+{
+	int	x;
+	int	y;
+
+	x = g->player_pos.x;
+	y = g->player_pos.y;
+	if (g->map[x - 1 + y * g->map_width] == '0')
+	{
+		g->map[x - 1 + y * g->map_width] = 'P';
+		g->map[x + y * g->map_width] = '0';
+	}
+	else if (g->map[x - 1 + y * g->map_width] == 'C')
+	{
+		g->map[x - 1 + y * g->map_width] = 'P';
+		g->map[x + y * g->map_width] = '0';
+		printf("%d\n", g->coll_count);
+		g->coll_count--;
+		printf("%d\n", g->coll_count);
+	}
+	else if (g->map[x - 1 + y * g->map_width] == 'E')
+	{
+		finish(g);
+		return ;
+	}
+	g->moves++;
+	update_player_pos(g);
 	draw_map(g);
 }
 
@@ -165,7 +247,7 @@ int	key_hook(int keycode, t_game *g)
 	else if (keycode == 0)
 	{
 		printf("A\n");
-
+		move_left(g);
 	}
 	else if (keycode == 1)
 	{
@@ -175,13 +257,12 @@ int	key_hook(int keycode, t_game *g)
 	else if (keycode == 2)
 	{
 		printf("D\n");
-		//move(4, g);
+		move_right(g);
 	}
 	else if (keycode == 53)
 	{
 		printf("ESC\n");
 	}
-	//printf("Hello from key_hook! %d\n", keycode);
 	return (0);
 }
 
