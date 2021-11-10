@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:04:42 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 23:56:39 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:49:02 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,18 +102,3 @@ int	main(int ac, char **argv)
 	mlx_hook(g.win, 17, 0, clean, &g);
 	mlx_loop(g.mlx);
 }
-
-	//t_data	img;
-	//mlx_string_put(mlx, mlx_win, 10, 10, 0x008700af, "Hapi");
-
-	//img.img = mlx_new_image(mlx, 2, 2);
-	//img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-	//&img.line_length, &img.endian);
-	//my_mlx_pixel_put(img.img, 0, 0, 0x00ffffff);
-// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-// 	*(unsigned int *) dst = color;
-// }

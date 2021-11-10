@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 01:07:15 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 14:32:46 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:47:58 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	load_assets(void *mlx, t_game *g)
 	g->wall.addr = mlx_get_data_addr(&g->wall.img, &g->wall.bits_per_pixel,
 			&g->wall.width, &g->wall.endian);
 	g->coll.img = mlx_xpm_file_to_image(mlx, "./img/coll.xpm", &g->coll.width,
-		&g->coll.height);
+			&g->coll.height);
 	if (!g->coll.img)
 		return (1);
 	g->coll.addr = mlx_get_data_addr(&g->coll.img, &g->coll.bits_per_pixel,

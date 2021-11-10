@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 01:06:07 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 22:22:51 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:46:31 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 #include "libft/libft.h"
 #include <stdio.h>
 #include "get_next_line.h"
-
-int	open_file(int *fd, char *file)
-{
-	*fd = open(file, O_RDONLY);
-	if (*fd == -1)
-		return (-1);
-	return (0);
-}
 
 int	count_lines(t_game *g, char *file)
 {
