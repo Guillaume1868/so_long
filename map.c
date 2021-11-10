@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 01:06:07 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 14:30:59 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/10 22:22:51 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ int	parse_map(t_game *g, char *file)
 	count_lines(g, file);
 	if (g->map_height == -1)
 		return (1);
-	g->map = malloc(sizeof(char *) * g->map_height);
+	g->map = ft_calloc(sizeof(char *), g->map_height * g->map_width);
+	ft_bzero(g->map, g->map_height);
 	fd = open(file, O_RDONLY);
 	if (fd == -1 || !g->map)
 		return (1);
