@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 15:08:40 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 14:49:17 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:18:57 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ int		parse_map(t_game *g, char *file);
 int		put_error(int type);
 int		load_assets(void *mlx, t_game *g);
 void	draw_map(t_game *g);
-void	clean(t_game *g);
+int		clean(t_game *g);
 void	move(t_game *g, int xd, int yd);
 void	put_img(t_game *g, int x, int y, char c);
 int		key_hook(int keycode, t_game *g);
+void	finish(t_game *g);
 
 #endif

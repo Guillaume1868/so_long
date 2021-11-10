@@ -6,50 +6,12 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:41:59 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 14:58:08 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 00:17:55 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <stdio.h>
-
-void	draw_end(t_game *g)
-{
-	int		x;
-	int		y;
-
-	g->won = 1;
-	printf("You finished the game with %d moves", g->moves + 1);
-	y = 0;
-	while (y < g->map_height)
-	{
-		x = 0;
-		while (x < g->map_width)
-		{
-			if ((x + y) % 2)
-				put_img(g, x, y, 'E');
-			else
-				put_img(g, x, y, 'P');
-			mlx_string_put(g->mlx, g->win, x * 64 + 32, y * 64 + 32,
-				0x008700af, "GG!");
-			x++;
-		}
-		y++;
-	}
-	mlx_string_put(g->mlx, g->win, 0, 10,
-		0x00aff087, "Press ESC to QUIT !");
-}
-
-void	finish(t_game *g)
-{
-	if (g->coll_count != 0)
-	{
-		write(1, "You still need to collect onigiris\n", 35);
-		g->moves--;
-	}
-	else
-		draw_end(g);
-}
 
 void	update_player_pos(t_game *g)
 {
@@ -66,6 +28,24 @@ void	update_player_pos(t_game *g)
 				g->player_pos = (t_coord){x, y};
 		}
 	}
+}
+
+void	update_map(t_game *g, int xd, int yd)
+{
+	char	*hud;
+	char	*tmp;
+	int		x;
+	int		y;
+
+	x = g->player_pos.x;
+	y = g->player_pos.y;
+	put_img(g, x + xd, y + yd, g->map[x + xd + (y + yd) * g->map_width]);
+	put_img(g, x, y, g->map[x + y * g->map_width]);
+	put_img(g, 0, 0, g->map[0]);
+	tmp = ft_itoa(g->moves);
+	hud = ft_strjoin(tmp, " Moves");
+	mlx_string_put(g->mlx, g->win, 10, 10, 0x00ffffff, hud);
+	free(hud);
 }
 
 void	move(t_game *g, int xd, int yd)
@@ -88,12 +68,11 @@ void	move(t_game *g, int xd, int yd)
 	}
 	if (g->map[x + xd + (y + yd) * g->map_width] != '1')
 		g->moves++;
-	update_player_pos(g);
-	draw_map(g);
 	if (g->map[x + xd + (y + yd) * g->map_width] == 'E')
-	{
 		finish(g);
-	}
+	if (!g->won)
+		update_map(g, xd, yd);
+	update_player_pos(g);
 }
 
 int	key_hook(int keycode, t_game *g)

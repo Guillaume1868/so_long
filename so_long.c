@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:04:42 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 14:48:22 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/10 23:56:39 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	put_error(int type)
 	return (1);
 }
 
-void	clean(t_game *g)
+int	clean(t_game *g)
 {
 	mlx_destroy_image(g->mlx, g->empty.img);
 	mlx_destroy_image(g->mlx, g->player.img);
@@ -99,6 +99,7 @@ int	main(int ac, char **argv)
 	load_assets(g.mlx, &g);
 	draw_map(&g);
 	mlx_key_hook(g.win, key_hook, &g);
+	mlx_hook(g.win, 17, 0, clean, &g);
 	mlx_loop(g.mlx);
 }
 
