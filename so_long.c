@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:04:42 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/10 12:01:25 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:48:22 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 void	put_img(t_game *g, int x, int y, char c)
 {
-	//printf("Put image %c at x %d y %d\n", c, x, y);
 	if (c == '0')
 		mlx_put_image_to_window(g->mlx, g->win, g->empty.img, x * 64, y * 64);
 	else if (c == '1')
@@ -49,7 +48,7 @@ void	draw_map(t_game *g)
 		y++;
 	}
 	tmp = ft_itoa(g->moves);
-	hud = ft_strjoin(tmp, "Moves");
+	hud = ft_strjoin(tmp, " Moves");
 	mlx_string_put(g->mlx, g->win, 10, 10, 0x00ffffff, hud);
 	free(hud);
 }
@@ -75,195 +74,15 @@ int	put_error(int type)
 	return (1);
 }
 
-void	finish(t_game *g)
+void	clean(t_game *g)
 {
-	/*int		x;
-	int		y;
-
-	y = 0;
-	while (y < g->map_height)
-	{
-		x = 0;
-		while (x < g->map_width)
-		{
-			if ((x + y) % 2)
-				put_img(g, x, y, 'E');
-			else
-				put_img(g, x, y, 'P');
-			mlx_string_put(g->mlx, g->win, x * 64 + 32, y * 64 + 32, 0x00ffffff, "GG!");
-			x++;
-		}
-		y++;
-	}*/
-	printf("You finished the game with %d mooves", g->moves);
+	mlx_destroy_image(g->mlx, g->empty.img);
+	mlx_destroy_image(g->mlx, g->player.img);
+	mlx_destroy_image(g->mlx, g->coll.img);
+	mlx_destroy_image(g->mlx, g->wall.img);
+	free(g->map);
 	mlx_destroy_window(g->mlx, g->win);
-}
-
-void	update_player_pos(t_game *g)
-{
-	int	x;
-	int	y;
-
-	y = -1;
-	while (++y < g->map_height)
-	{
-		x = -1;
-		while (++x < g->map_width)
-		{
-			if (g->map[y * (g->map_width) + x] == 'P')
-				g->player_pos = (t_coord){x, y};
-		}
-	}
-}
-
-void	move_up(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->player_pos.x;
-	y = g->player_pos.y;
-	if (g->map[x + (y - 1) * g->map_width] == '0')
-	{
-		g->map[x + (y - 1) * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-	}
-	else if (g->map[x + (y - 1) * g->map_width] == 'C')
-	{
-		g->map[x + (y - 1) * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-		printf("%d\n", g->coll_count);
-		g->coll_count--;
-		printf("%d\n", g->coll_count);
-	}
-	else if (g->map[x + (y - 1) * g->map_width] == 'E')
-	{
-		finish(g);
-		return ;
-	}
-	g->moves++;
-	update_player_pos(g);
-	draw_map(g);
-}
-
-void	move_down(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->player_pos.x;
-	y = g->player_pos.y;
-	if (g->map[x + (y + 1) * g->map_width] == '0')
-	{
-		g->map[x + (y + 1) * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-	}
-	else if (g->map[x + (y + 1) * g->map_width] == 'C')
-	{
-		g->map[x + (y + 1) * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-		printf("%d\n", g->coll_count);
-		g->coll_count--;
-		printf("%d\n", g->coll_count);
-	}
-	else if (g->map[x + (y + 1) * g->map_width] == 'E')
-	{
-		finish(g);
-		return ;
-	}
-	g->moves++;
-	update_player_pos(g);
-	draw_map(g);
-}
-
-void	move_right(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->player_pos.x;
-	y = g->player_pos.y;
-	if (g->map[1 + x + y * g->map_width] == '0')
-	{
-		g->map[1 + x + y * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-	}
-	else if (g->map[1 + x + y * g->map_width] == 'C')
-	{
-		g->map[1 + x + y * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-		printf("%d\n", g->coll_count);
-		g->coll_count--;
-		printf("%d\n", g->coll_count);
-	}
-	else if (g->map[1 + x + y * g->map_width] == 'E')
-	{
-		finish(g);
-		return ;
-	}
-	g->moves++;
-	update_player_pos(g);
-	draw_map(g);
-}
-
-void	move_left(t_game *g)
-{
-	int	x;
-	int	y;
-
-	x = g->player_pos.x;
-	y = g->player_pos.y;
-	if (g->map[x - 1 + y * g->map_width] == '0')
-	{
-		g->map[x - 1 + y * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-	}
-	else if (g->map[x - 1 + y * g->map_width] == 'C')
-	{
-		g->map[x - 1 + y * g->map_width] = 'P';
-		g->map[x + y * g->map_width] = '0';
-		printf("%d\n", g->coll_count);
-		g->coll_count--;
-		printf("%d\n", g->coll_count);
-	}
-	else if (g->map[x - 1 + y * g->map_width] == 'E')
-	{
-		finish(g);
-		return ;
-	}
-	g->moves++;
-	update_player_pos(g);
-	draw_map(g);
-}
-
-int	key_hook(int keycode, t_game *g)
-{
-	(void) g;
-	if (keycode == 13)
-	{
-		printf("W\n");
-		move_up(g);
-	}
-	else if (keycode == 0)
-	{
-		printf("A\n");
-		move_left(g);
-	}
-	else if (keycode == 1)
-	{
-		printf("S\n");
-		move_down(g);
-	}
-	else if (keycode == 2)
-	{
-		printf("D\n");
-		move_right(g);
-	}
-	else if (keycode == 53)
-	{
-		printf("ESC\n");
-	}
-	return (0);
+	exit(0);
 }
 
 int	main(int ac, char **argv)

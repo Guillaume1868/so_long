@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 01:06:07 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/09 10:13:27 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:30:59 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <stdio.h>
 #include "get_next_line.h"
 
+int	open_file(int *fd, char *file)
+{
+	*fd = open(file, O_RDONLY);
+	if (*fd == -1)
+		return (-1);
+	return (0);
+}
+
 int	count_lines(t_game *g, char *file)
 {
 	int		fd;
@@ -22,8 +30,7 @@ int	count_lines(t_game *g, char *file)
 	char	*line;
 
 	i = 0;
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	if (open_file(&fd, file) == -1)
 		return (-1);
 	line = get_next_line(fd);
 	g->map_width = ft_strlen(line) - 1;
@@ -31,8 +38,12 @@ int	count_lines(t_game *g, char *file)
 	{
 		if (g->map_width != (int)ft_strlen(line) - 1)
 		{
-			close(fd);
-			return (put_error(2));
+			if (!(line[ft_strlen(line) - 1] != '\n'
+					&& g->map_width - 1 == (int)ft_strlen(line) - 1))
+			{
+				close(fd);
+				return (put_error(2));
+			}
 		}
 		i++;
 		line = get_next_line(fd);
@@ -124,7 +135,6 @@ int	parse_map(t_game *g, char *file)
 	j = -1;
 	while (line)
 	{
-		printf("%d %s", g->map_height, line);
 		while (line[++j] != '\n' && line[j] != '\0')
 			g->map[++i] = line[j];
 		line = get_next_line(fd);
