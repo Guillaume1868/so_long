@@ -1,4 +1,4 @@
-#So Long
+# So Long
 This is an implementation of the 42 project so_long
 
 ## Usage
