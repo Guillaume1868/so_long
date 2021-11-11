@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 00:18:04 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/11 00:19:17 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 12:54:31 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	draw_end(t_game *g)
 	int		y;
 
 	g->won = 1;
-	printf("You finished the game with %d moves", g->moves + 1);
+	printf("You finished the game with %d moves", g->moves);
 	y = 0;
 	while (y < g->map_height)
 	{

@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:41:59 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/11 00:17:55 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 12:50:46 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	update_map(t_game *g, int xd, int yd)
 	put_img(g, 0, 0, g->map[0]);
 	tmp = ft_itoa(g->moves);
 	hud = ft_strjoin(tmp, " Moves");
+	printf("%d moves\n", g->moves);
 	mlx_string_put(g->mlx, g->win, 10, 10, 0x00ffffff, hud);
 	free(hud);
 }

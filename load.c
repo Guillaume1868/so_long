@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 01:07:15 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/11 00:47:58 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 12:53:51 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	load_assets2(void *mlx, t_game *g)
 	g->empty.addr = mlx_get_data_addr(&g->empty.img, &g->empty.bits_per_pixel,
 			&g->empty.width, &g->empty.endian);
 	g->won = 0;
+	g->moves = 0;
 	return (0);
 }
 
