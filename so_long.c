@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 13:04:42 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/11 00:49:02 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/11 13:04:23 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,13 @@ int	clean(t_game *g)
 int	main(int ac, char **argv)
 {
 	t_game	g;
+	int		len;
 
 	if (ac != 2)
+		return (put_error(1));
+	len = ft_strlen(argv[1]);
+	if (!(argv[1][len - 1] == 'r' && argv[1][len - 2] == 'e' &&
+		argv[1][len - 3] == 'b' && argv[1][len - 4] == '.'))
 		return (put_error(1));
 	if (parse_map(&g, argv[1]))
 		return (1);
