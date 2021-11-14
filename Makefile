@@ -1,4 +1,4 @@
-NAME 	=	SoLong
+NAME 	=	so_long
 
 SRC		=	so_long.c get_next_line.c get_next_line_utils.c load.c map.c \
 			movement.c end.c map2.c

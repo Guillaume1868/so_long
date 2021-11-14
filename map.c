@@ -6,7 +6,7 @@
 /*   By: gaubert <gaubert@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 01:06:07 by gaubert           #+#    #+#             */
-/*   Updated: 2021/11/11 00:46:31 by gaubert          ###   ########.fr       */
+/*   Updated: 2021/11/14 22:05:47 by gaubert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	check_count(t_game *g)
 			}
 		}
 	}
-	if (g->player_count != 1 || g->coll_count < 1 || g->exit_count < 1)
+	if (g->player_count != 1 || g->coll_count < 1 || g->exit_count != 1)
 		return (put_error(5));
 	return (0);
 }
