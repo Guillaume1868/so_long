@@ -24,4 +24,4 @@ Map example :
 
 ## Compatibility
 - My project works on MacOS with x86 and M1
-- It will probably run on Linux, but untested
+- It will probably run on Linux, but untested (You will probably need to get the mlx for linux)
