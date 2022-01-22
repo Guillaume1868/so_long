@@ -1,10 +1,16 @@
 # So Long
 This is an implementation of the 42 project so_long
 
+## subject
+
+See the pdf to know what was my instructions
+
 ## Usage
 To build, use make. It will build the included mlx library and link it with my project.
 
-Then you can launch ./SoLong map.ber
+`make`
+
+Then you can launch `./so_long map.ber`
 
 ## Map
 - The map must be composed of only 5 possible characters: 0 for an empty
@@ -25,3 +31,7 @@ Map example :
 ## Compatibility
 - My project works on MacOS with x86 and M1
 - It will probably run on Linux, but untested (You will probably need to get the mlx for linux)
+
+## final grade
+
+100/100
