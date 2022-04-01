@@ -1,5 +1,6 @@
 # So Long
 [![42 Project Score](https://42-project-badge.glitch.me/users/gaubert/project/so_long)](https://github.com/ricardoreves/42-project-badge)
+![norminette](https://github.com/Guillaume1868/so_long/workflows/norminette/badge.svg)
 
 
 This is an implementation of the 42 project so_long
