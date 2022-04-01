@@ -1,4 +1,5 @@
 # So Long
+[![42 Project Score](https://42-project-badge.glitch.me/users/gaubert/project/so_long)](https://github.com/ricardoreves/42-project-badge)
 This is an implementation of the 42 project so_long
 
 ## subject
