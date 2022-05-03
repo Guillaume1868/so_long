@@ -85,12 +85,12 @@ int	clean(t_game *g)
 	exit(0);
 }
 
-int	main(int ac, char **argv)
+int	main(int argc, char **argv)
 {
 	t_game	g;
 	int		len;
 
-	if (ac != 2)
+	if (argc != 2)
 		return (put_error(1));
 	len = ft_strlen(argv[1]);
 	if (!(argv[1][len - 1] == 'r' && argv[1][len - 2] == 'e' &&
